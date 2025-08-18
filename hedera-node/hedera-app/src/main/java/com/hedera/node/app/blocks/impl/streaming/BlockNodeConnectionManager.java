@@ -780,7 +780,7 @@ public class BlockNodeConnectionManager {
                         // this new connection has a lower (or equal) priority than the existing active connection
                         // this connection task should thus be cancelled/ignored
                         logger.debug(
-                                "Active connection has equal/higher priority; ignoring candidate {} (active={})",
+                                "Active connection has equal/higher priority; ignoring candidate {} (active: {})",
                                 connection,
                                 activeConnection);
                         return;

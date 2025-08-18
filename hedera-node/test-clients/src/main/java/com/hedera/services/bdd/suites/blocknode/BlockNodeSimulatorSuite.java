@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Tag;
 
 /**
  * This suite is for testing with the block node simulator.
+ * NOTE: com.hedera.node.app.blocks.impl.streaming MUST have DEBUG logging enabled
  */
 @Tag(BLOCK_NODE_SIMULATOR)
 @OrderedInIsolation
@@ -201,7 +202,7 @@ public class BlockNodeSimulatorSuite {
                                 "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
                                 portNumbers.get(1)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -224,7 +225,7 @@ public class BlockNodeSimulatorSuite {
                                 "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
                                 portNumbers.get(2)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
                                 portNumbers.get(2)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -247,7 +248,7 @@ public class BlockNodeSimulatorSuite {
                                 "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
                                 portNumbers.get(3)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
                                 portNumbers.get(3)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -265,18 +266,16 @@ public class BlockNodeSimulatorSuite {
                                 "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M", portNumbers.get(1)),
-                        String.format("[localhost:%s/ACTIVE] Closing connection...", portNumbers.get(3)),
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H", portNumbers.get(1)),
                         String.format(
                                 "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED",
                                 portNumbers.get(3)),
                         String.format(
                                 "[localhost:%s/UNINITIALIZED] Connection successfully closed", portNumbers.get(3)),
                         String.format(
-                                "The existing active connection (localhost:%s/ACTIVE) has an equal or higher priority"
-                                        + " than the connection (localhost:%s/CONNECTING) we are attempting to connect to"
-                                        + " and this new connection attempt will be ignored",
-                                portNumbers.get(1), portNumbers.get(2)))),
+                                "Active connection has equal/higher priority; ignoring candidate localhost:%s/CONNECTING" +
+                                        " (active: localhost:%s/ACTIVE)",
+                                portNumbers.get(2), portNumbers.get(1)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true));
     }
 
@@ -328,7 +327,6 @@ public class BlockNodeSimulatorSuite {
             })
     @Order(5)
     final Stream<DynamicTest> testProactiveBlockBufferAction() {
-        // NOTE: com.hedera.node.app.blocks.impl.streaming MUST have DEBUG logging enabled
         final AtomicReference<Instant> timeRef = new AtomicReference<>();
         return hapiTest(
                 doingContextual(
@@ -448,8 +446,7 @@ public class BlockNodeSimulatorSuite {
                         Duration.of(15, SECONDS),
                         // Verify that the periodic reset is performed after the period and the connection is closed
                         String.format(
-                                "[localhost:%s/ACTIVE] Performing scheduled stream reset", portNumbers.getFirst()),
-                        String.format("[localhost:%s/ACTIVE] Closing connection...", portNumbers.getFirst()),
+                                "[localhost:%s/ACTIVE] Attempting scheduled stream reset", portNumbers.getFirst()),
                         String.format(
                                 "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED",
                                 portNumbers.getFirst()),
