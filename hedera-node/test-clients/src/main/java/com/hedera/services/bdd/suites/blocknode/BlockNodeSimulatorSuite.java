@@ -146,7 +146,7 @@ public class BlockNodeSimulatorSuite {
                                 "[localhost:%s/UNINITIALIZED] Block node reported it is behind. Will restart stream at block 0.",
                                 portNumbers.getFirst()),
                         String.format(
-                                "[localhost:%s/ACTIVE] Received EndOfStream response (block=9223372036854775807, responseCode=BEHIND)",
+                                "[localhost:%s/ACTIVE] Received EndOfStream response (block=9223372036854775807, responseCode=BEHIND).",
                                 portNumbers.getFirst()))),
                 waitUntilNextBlocks(5).withBackgroundTraffic(true));
     }
@@ -189,20 +189,20 @@ public class BlockNodeSimulatorSuite {
                         connectionDropTime::get,
                         Duration.of(10, SECONDS),
                         Duration.of(45, SECONDS),
-                        String.format("[localhost:%s/ACTIVE] Stream encountered an error", portNumbers.getFirst()),
+                        String.format("[localhost:%s/ACTIVE] Stream encountered an error.", portNumbers.getFirst()),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset", portNumbers.getFirst()),
+                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset.", portNumbers.getFirst()),
                         // Select the next block node to connect to based on priorities
-                        String.format("Selected block node localhost:%s for connection attempt", portNumbers.get(1)),
+                        String.format("Selected block node localhost:%s for connection attempt.", portNumbers.get(1)),
                         String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING.",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE.",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H.",
                                 portNumbers.get(1)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -212,20 +212,20 @@ public class BlockNodeSimulatorSuite {
                         connectionDropTime::get,
                         Duration.of(10, SECONDS),
                         Duration.of(45, SECONDS),
-                        String.format("[localhost:%s/ACTIVE] Stream encountered an error", portNumbers.get(1)),
+                        String.format("[localhost:%s/ACTIVE] Stream encountered an error.", portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset", portNumbers.get(1)),
+                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset.", portNumbers.get(1)),
                         // Select the next block node to connect to based on priorities
-                        String.format("Selected block node localhost:%s for connection attempt", portNumbers.get(2)),
+                        String.format("Selected block node localhost:%s for connection attempt.", portNumbers.get(2)),
                         String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.get(2)),
                         String.format(
-                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING.",
                                 portNumbers.get(2)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE.",
                                 portNumbers.get(2)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H.",
                                 portNumbers.get(2)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -235,20 +235,20 @@ public class BlockNodeSimulatorSuite {
                         connectionDropTime::get,
                         Duration.of(10, SECONDS),
                         Duration.of(45, SECONDS),
-                        String.format("[localhost:%s/ACTIVE] Stream encountered an error", portNumbers.get(2)),
+                        String.format("[localhost:%s/ACTIVE] Stream encountered an error.", portNumbers.get(2)),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset", portNumbers.get(2)),
+                                "[localhost:%s/UNINITIALIZED] Cancelled periodic stream reset.", portNumbers.get(2)),
                         // Select the next block node to connect to based on priorities
-                        String.format("Selected block node localhost:%s for connection attempt", portNumbers.get(3)),
+                        String.format("Selected block node localhost:%s for connection attempt.", portNumbers.get(3)),
                         String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.get(3)),
                         String.format(
-                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING.",
                                 portNumbers.get(3)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE.",
                                 portNumbers.get(3)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H.",
                                 portNumbers.get(3)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true),
                 doingContextual(spec -> connectionDropTime.set(Instant.now())),
@@ -260,21 +260,21 @@ public class BlockNodeSimulatorSuite {
                         Duration.of(45, SECONDS),
                         String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING.",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE.",
                                 portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H", portNumbers.get(1)),
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT24H.", portNumbers.get(1)),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED",
+                                "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED.",
                                 portNumbers.get(3)),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Connection successfully closed", portNumbers.get(3)),
+                                "[localhost:%s/UNINITIALIZED] Connection successfully closed.", portNumbers.get(3)),
                         String.format(
-                                "Active connection has equal/higher priority; ignoring candidate localhost:%s/CONNECTING" +
-                                        " (active: localhost:%s/ACTIVE)",
+                                "Active connection has equal/higher priority. Ignoring candidate localhost:%s/CONNECTING" +
+                                        " (active: localhost:%s/ACTIVE).",
                                 portNumbers.get(2), portNumbers.get(1)))),
                 waitUntilNextBlocks(10).withBackgroundTraffic(true));
     }
@@ -436,7 +436,7 @@ public class BlockNodeSimulatorSuite {
                         Duration.of(30, SECONDS),
                         Duration.of(15, SECONDS),
                         String.format(
-                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M",
+                                "[localhost:%s/ACTIVE] Scheduled periodic stream reset every PT1M.",
                                 portNumbers.getFirst()))),
                 burstOfTps(300, Duration.ofSeconds(60)),
                 sourcingContextual(spec -> assertHgcaaLogContainsTimeframe(
@@ -446,20 +446,20 @@ public class BlockNodeSimulatorSuite {
                         Duration.of(15, SECONDS),
                         // Verify that the periodic reset is performed after the period and the connection is closed
                         String.format(
-                                "[localhost:%s/ACTIVE] Attempting scheduled stream reset", portNumbers.getFirst()),
+                                "[localhost:%s/ACTIVE] Attempting scheduled stream reset.", portNumbers.getFirst()),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED",
+                                "[localhost:%s/UNINITIALIZED] Connection state transitioned from ACTIVE to UNINITIALIZED.",
                                 portNumbers.getFirst()),
                         String.format(
-                                "[localhost:%s/UNINITIALIZED] Connection successfully closed", portNumbers.getFirst()),
+                                "[localhost:%s/UNINITIALIZED] Connection successfully closed.", portNumbers.getFirst()),
                         // Select the next block node to connect to based on priorities
-                        String.format("Selected block node localhost:%s for connection attempt", portNumbers.getLast()),
+                        String.format("Selected block node localhost:%s for connection attempt.", portNumbers.getLast()),
                         String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.getLast()),
                         String.format(
-                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING.",
                                 portNumbers.getLast()),
                         String.format(
-                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE.",
                                 portNumbers.getLast()))),
                 assertHgcaaLogDoesNotContain(byNodeId(0), "ERROR", Duration.ofSeconds(5)));
     }
