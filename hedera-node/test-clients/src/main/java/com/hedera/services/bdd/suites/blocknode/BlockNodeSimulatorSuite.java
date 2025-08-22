@@ -476,20 +476,45 @@ public class BlockNodeSimulatorSuite {
                 @SubProcessNodeConfig(
                         nodeId = 0,
                         blockNodeIds = {0},
-                        blockNodePriorities = {0})
+                        blockNodePriorities = {0},
+                applicationPropertiesOverrides = {
+                        "blockStream.streamMode", "BOTH",
+                        "blockStream.writerMode", "FILE_AND_GRPC"
+                })
             })
     @Order(7)
     final Stream<DynamicTest> testBlockBufferDurability() {
         final AtomicReference<Instant> timeRef = new AtomicReference<>();
+        final List<Integer> portNumbers = new ArrayList<>();
         return hapiTest(
                 waitUntilNextBlocks(20).withBackgroundTraffic(true),
-                doingContextual(spec -> timeRef.set(Instant.now())),
+                doingContextual(spec -> {
+                    timeRef.set(Instant.now());
+                    portNumbers.add(spec.getBlockNodePortById(0));
+                }),
                 restartAtNextConfigVersion(),
                 sourcingContextual(spec -> assertHgcaaLogContainsTimeframe(
                         byNodeId(0),
                         timeRef::get,
                         Duration.ofMinutes(2),
                         Duration.ofMinutes(2),
-                        "Block buffer is being restored from disk")));
-    }
-}
+                        "Block buffer is being restored from disk",
+                        String.format("Selected block node localhost:%s for connection attempt", portNumbers.getLast()),
+                        String.format("[localhost:%s/CONNECTING] Running connection task...", portNumbers.getLast()),
+                        String.format(
+                                "[localhost:%s/PENDING] Connection state transitioned from CONNECTING to PENDING",
+                                portNumbers.getLast()),
+                        String.format(
+                                "[localhost:%s/ACTIVE] Connection state transitioned from PENDING to ACTIVE",
+                                portNumbers.getLast()),
+                        "Jumping to block",
+                        String.format(
+                                "[localhost:%s/ACTIVE] BlockAcknowledgement received for block",
+                                portNumbers.getLast()),
+                        "Created new block buffer directory",
+                        "Deleting old block buffer directory"
+                        )),
+                assertHgcaaLogDoesNotContain(byNodeId(0), "Block node reported status indicating immediate restart should be attempted.", Duration.ofSeconds(1)),
+                assertHgcaaLogDoesNotContain(byNodeId(0), "connection will be closed", Duration.ofSeconds(1))
+                );
+    }}
